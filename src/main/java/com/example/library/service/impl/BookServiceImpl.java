@@ -30,7 +30,6 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(bookCreateRequest.getAuthor());
         book.setTitle(bookCreateRequest.getTitle());
         book.setYear(bookCreateRequest.getYear());
-        book.setUuid(UUID.randomUUID());
 
         final Book saveBook = bookRepository.save(book);
         return bookResponseMapper.bookToBookResponse(saveBook);

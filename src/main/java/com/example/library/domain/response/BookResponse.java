@@ -11,5 +11,4 @@ public class BookResponse {
     private String author;
     private String year;
     private String person;
-    private UUID uuid;
 }

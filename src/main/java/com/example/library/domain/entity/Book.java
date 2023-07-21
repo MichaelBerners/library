@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -21,10 +22,14 @@ public class Book {
     private String title;
     private String author;
     private String year;
+    @Enumerated(EnumType.ORDINAL)
+    private BookCondition condition;
+    @Enumerated(EnumType.ORDINAL)
+    private BookStatus status;
     @ManyToOne
     @JoinColumn(name = "person_id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Person person;
-    private UUID uuid;
+    //private UUID uuid;
 }
