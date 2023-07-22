@@ -7,9 +7,9 @@ import com.example.library.domain.response.BookResponse;
 import java.util.List;
 
 public interface BookService {
-    BookResponse create (BookCreateRequest bookCreateRequest);
+    BookResponse create (BookRequest bookCreateRequest);
     List<BookResponse> readBooks();
-    BookResponse readBook(BookRequest bookRequest);
+    BookResponse readBook(String author, String title, String year);
     void delete(BookRequest bookRequest);
 
 

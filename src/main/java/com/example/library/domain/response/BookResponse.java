@@ -1,8 +1,7 @@
 package com.example.library.domain.response;
 
+import com.example.library.domain.entity.BookStatus;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 public class BookResponse {
@@ -10,5 +9,5 @@ public class BookResponse {
     private String title;
     private String author;
     private String year;
-    private String person;
+    private BookStatus status;
 }

@@ -9,8 +9,8 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface BookResponseMapper {
 
-    @Mappings({
+    /*@Mappings({
             @Mapping(target = "person", source = "book.person.firstName")
-    })
+    })*/
     BookResponse bookToBookResponse(Book book);
 }

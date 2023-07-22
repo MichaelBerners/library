@@ -8,7 +8,7 @@ import java.util.List;
 public interface PersonService {
 
     PersonResponse create(PersonRequest personRequest);
-    PersonResponse read(PersonRequest personRequest);
+    PersonResponse read(String passportNumber);
     List<PersonResponse> readAll();
     PersonResponse update(PersonRequest personRequest);
     void delete(PersonRequest personRequest);

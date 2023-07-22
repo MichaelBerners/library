@@ -1,17 +1,16 @@
 package com.example.library.domain.request;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class BookCreateRequest {
 
-    @NotEmpty(message = "Автор не должно быть нулем")
+    @NotEmpty(message = "Author should not be empty")
     private String author;
-    @NotEmpty(message = "Название книги не должно быть нулем")
+    @NotEmpty(message = "Title should not be empty")
     private String title;
-    @NotEmpty(message = "Дата не должна бть нулевой")
+    @NotEmpty(message = "Year should not be empty")
     private String year;
 
 

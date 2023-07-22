@@ -17,16 +17,16 @@
           "persons-controller"
         ],
         "operationId": "update",
-        "parameters": [
-          {
-            "name": "personRequest",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PersonRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -57,16 +57,16 @@
           "persons-controller"
         ],
         "operationId": "create",
-        "parameters": [
-          {
-            "name": "personRequest",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PersonRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -97,16 +97,16 @@
           "persons-controller"
         ],
         "operationId": "delete",
-        "parameters": [
-          {
-            "name": "personRequest",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PersonRequest"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonRequest"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "400": {
             "description": "Bad Request",
@@ -134,7 +134,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BookCreateRequest"
+                "$ref": "#/components/schemas/BookRequest"
               }
             }
           },
@@ -238,11 +238,11 @@
         "operationId": "read",
         "parameters": [
           {
-            "name": "personRequest",
+            "name": "passportNumber",
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/PersonRequest"
+              "type": "string"
             }
           }
         ],
@@ -311,11 +311,27 @@
         "operationId": "read_1",
         "parameters": [
           {
-            "name": "bookRequest",
+            "name": "author",
             "in": "query",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/BookRequest"
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -347,6 +363,14 @@
   "components": {
     "schemas": {
       "PersonRequest": {
+        "required": [
+          "birthYear",
+          "email",
+          "firstName",
+          "lastName",
+          "passportNumber",
+          "phoneNumber"
+        ],
         "type": "object",
         "properties": {
           "firstName": {
@@ -356,61 +380,16 @@
             "type": "string"
           },
           "birthYear": {
-            "type": "string"
-          },
-          "passportNumber": {
-            "type": "string"
-          }
-        }
-      },
-      "Book": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "title": {
-            "type": "string"
-          },
-          "author": {
-            "type": "string"
-          },
-          "year": {
-            "type": "string"
-          },
-          "person": {
-            "$ref": "#/components/schemas/Person"
-          },
-          "uuid": {
             "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "Person": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "birthYear": {
-            "type": "string"
-          },
-          "books": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Book"
-            }
+            "format": "date-time"
           },
           "passportNumber": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
             "type": "string"
           }
         }
@@ -427,18 +406,31 @@
           "birthYear": {
             "type": "string"
           },
-          "books": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Book"
-            }
-          },
           "passportNumber": {
             "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "EDITED",
+              "DEBTOR",
+              "VERIFIED"
+            ]
           }
         }
       },
-      "BookCreateRequest": {
+      "BookRequest": {
         "required": [
           "author",
           "title",
@@ -469,27 +461,13 @@
           "year": {
             "type": "string"
           },
-          "person": {
-            "type": "string"
-          },
-          "uuid": {
+          "status": {
             "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "BookRequest": {
-        "required": [
-          "author",
-          "title"
-        ],
-        "type": "object",
-        "properties": {
-          "author": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
+            "enum": [
+              "FREE",
+              "RESERVED",
+              "EMPLOYED"
+            ]
           }
         }
       }

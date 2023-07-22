@@ -12,7 +12,11 @@ create table persons
     phone_number    varchar(12)  not null,
     email           varchar(150) not null,
     create_at       timestamp    not null,
-    status          int          not null
+    status          int          not null,
+    unique (passport_number),
+    unique (phone_number),
+    unique (email)
+
 
 );
 --rollback drop table persons

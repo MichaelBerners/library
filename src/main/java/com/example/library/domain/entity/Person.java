@@ -1,16 +1,12 @@
 package com.example.library.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,7 +23,8 @@ public class Person {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "birth_year")
-    private LocalDate birthYear;
+    @Temporal(TemporalType.DATE)
+    private Date birthYear;
     @Column(name = "passport_number")
     private String passportNumber;
     @Column(name = "phone_number")

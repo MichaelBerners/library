@@ -1,7 +1,5 @@
 package com.example.library.controller;
 
-import com.example.library.domain.entity.Book;
-import com.example.library.domain.request.BookCreateRequest;
 import com.example.library.domain.request.BookRequest;
 import com.example.library.domain.response.BookResponse;
 import com.example.library.service.BookService;
@@ -20,13 +18,15 @@ public class BooksController {
     private final BookService bookService;
 
     @PostMapping("/new")
-    public BookResponse create(@RequestBody @Valid BookCreateRequest bookCreateRequest) {
-        return bookService.create(bookCreateRequest);
+    public BookResponse create(@RequestBody @Valid BookRequest bookRequest) {
+        return bookService.create(bookRequest);
     }
 
     @GetMapping("/search")
-    public BookResponse read(BookRequest bookRequest) {
-        return bookService.readBook(bookRequest);
+    public BookResponse read(@RequestParam(value = "author") String author,
+                             @RequestParam(value = "title") String title,
+                             @RequestParam(value = "year") String year) {
+        return bookService.readBook(author, title, year);
     }
 
     @GetMapping

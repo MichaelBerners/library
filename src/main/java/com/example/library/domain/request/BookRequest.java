@@ -6,8 +6,10 @@ import lombok.Data;
 @Data
 public class BookRequest {
 
-    @NotEmpty(message = "Имя не должно быть пустым")
+    @NotEmpty(message = "Author should not be empty")
     private String author;
-    @NotEmpty(message = "Автор не должен быть пустым")
+    @NotEmpty(message = "Title should not be empty")
     private String title;
+    @NotEmpty(message = "Year should not be empty")
+    private String year;
 }

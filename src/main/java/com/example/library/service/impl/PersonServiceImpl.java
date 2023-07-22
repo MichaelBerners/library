@@ -1,6 +1,9 @@
 package com.example.library.service.impl;
 
 import com.example.library.domain.entity.Person;
+import com.example.library.domain.entity.PersonStatus;
+import com.example.library.domain.exception.CreateNewPersonException;
+import com.example.library.domain.exception.PersonDeleteException;
 import com.example.library.domain.exception.PersonNotFoundException;
 import com.example.library.domain.mapper.PersonResponseMapper;
 import com.example.library.domain.repository.PersonRepository;
@@ -8,8 +11,11 @@ import com.example.library.domain.request.PersonRequest;
 import com.example.library.domain.response.PersonResponse;
 import com.example.library.service.PersonService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,16 +33,28 @@ public class PersonServiceImpl implements PersonService {
         person.setLastName(personRequest.getLastName());
         person.setBirthYear(personRequest.getBirthYear());
         person.setPassportNumber(personRequest.getPassportNumber());
-        final Person save = personRepository.save(person);
-        PersonResponse personResponse = personResponseMapper.personToPersonResponse(save);
+        person.setPhoneNumber(personRequest.getPhoneNumber());
+        person.setEmail(personRequest.getEmail());
+        person.setCreateAt(new Timestamp(System.currentTimeMillis()));
+        person.setStatus(PersonStatus.NEW);
+        final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withIgnorePaths("id", "createAt");
+        final Example<Person> example = Example.of(person, exampleMatcher);
+        if(personRepository.exists(example)){
+            throw new CreateNewPersonException();
+        }
+        else {
+            final Person save = personRepository.save(person);
+            PersonResponse personResponse = personResponseMapper.personToPersonResponse(save);
 
-        return personResponse;
+            return personResponse;
+        }
     }
 
     @Override
-    public PersonResponse read(PersonRequest personRequest) {
+    public PersonResponse read(String passportNumber) {
         final Person person = personRepository
-                .findPersonByPassportNumber(personRequest.getPassportNumber())
+                .findPersonByPassportNumber(passportNumber)
                 .orElseThrow(() -> new PersonNotFoundException());
         final PersonResponse personResponse = personResponseMapper.personToPersonResponse(person);
 
@@ -62,6 +80,11 @@ public class PersonServiceImpl implements PersonService {
         person.setLastName(personRequest.getLastName());
         person.setBirthYear(personRequest.getBirthYear());
         person.setPassportNumber(personRequest.getPassportNumber());
+        person.setPhoneNumber(personRequest.getPhoneNumber());
+        person.setEmail(personRequest.getEmail());
+        if(person.getStatus() == PersonStatus.NEW) {
+            person.setStatus(PersonStatus.EDITED);
+        }
         final Person save = personRepository.save(person);
         final PersonResponse personResponse = personResponseMapper.personToPersonResponse(save);
 
@@ -73,8 +96,9 @@ public class PersonServiceImpl implements PersonService {
         Person person = personRepository
                 .findPersonByPassportNumber(personRequest.getPassportNumber())
                 .orElseThrow(() -> new PersonNotFoundException());
-        personRepository.delete(person);
-
-
+        if(person.getStatus() != PersonStatus.DEBTOR) {
+            personRepository.delete(person);
+        }
+        else new PersonDeleteException();
     }
 }

@@ -1,14 +1,23 @@
 package com.example.library.domain.request;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Data
 public class PersonRequest {
 
+    @NotEmpty(message = "First name should not be empty")
     private String firstName;
+    @NotEmpty(message = "Last Name should not be empty")
     private String lastName;
-    private LocalDate birthYear;
+    @NotNull(message = "Birth year should not be empty")
+    private Date birthYear;
+    @NotEmpty(message = "Passport number should not be empty")
     private String passportNumber;
+    @NotEmpty(message = "Phone number should not be empty")
+    private String phoneNumber;
+    @NotEmpty(message = "Email should not be empty")
+    private String email;
 }
