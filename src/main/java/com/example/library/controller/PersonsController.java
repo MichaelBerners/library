@@ -5,6 +5,8 @@ import com.example.library.domain.response.PersonResponse;
 import com.example.library.service.PersonService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +19,9 @@ public class PersonsController {
     private final PersonService personService;
 
     @PostMapping("/new")
-    PersonResponse create(@RequestBody @Valid PersonRequest personRequest) {
-        return personService.create(personRequest);
+    PersonResponse create(@RequestBody @Valid PersonRequest personRequest, BindingResult bindingResult) {
+
+        return personService.create(personRequest, bindingResult);
     }
 
     @GetMapping("/search")

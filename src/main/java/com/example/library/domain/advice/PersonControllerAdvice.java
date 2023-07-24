@@ -1,6 +1,7 @@
 package com.example.library.domain.advice;
 
 import com.example.library.domain.exception.CreateNewPersonException;
+import com.example.library.domain.exception.PersonCreateRequestException;
 import com.example.library.domain.exception.PersonDeleteException;
 import com.example.library.domain.exception.PersonNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -27,5 +28,11 @@ public class PersonControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String notValid(CreateNewPersonException e) {
         return "passport data, phone or email are already in the system";
+    }
+
+    @ExceptionHandler(PersonCreateRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String notValid(PersonCreateRequestException e) {
+        return e.getMessage();
     }
 }

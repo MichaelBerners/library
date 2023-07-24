@@ -3,6 +3,7 @@ package com.example.library.service.impl;
 import com.example.library.domain.entity.Person;
 import com.example.library.domain.entity.PersonStatus;
 import com.example.library.domain.exception.CreateNewPersonException;
+import com.example.library.domain.exception.PersonCreateRequestException;
 import com.example.library.domain.exception.PersonDeleteException;
 import com.example.library.domain.exception.PersonNotFoundException;
 import com.example.library.domain.mapper.PersonResponseMapper;
@@ -14,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,7 +30,8 @@ public class PersonServiceImpl implements PersonService {
     private final PersonResponseMapper personResponseMapper;
 
     @Override
-    public PersonResponse create(PersonRequest personRequest) {
+    public PersonResponse create(PersonRequest personRequest, BindingResult bindingResult) {
+        createErrorMessage(bindingResult);
         final Person person = new Person();
         person.setFirstName(personRequest.getFirstName());
         person.setLastName(personRequest.getLastName());
@@ -100,5 +104,20 @@ public class PersonServiceImpl implements PersonService {
             personRepository.delete(person);
         }
         else new PersonDeleteException();
+    }
+
+    private void createErrorMessage(BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            StringBuilder stringBuilder = new StringBuilder();
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError error : fieldErrors) {
+                stringBuilder
+                        .append(error.getField())
+                        .append(" - ")
+                        .append(error.getDefaultMessage())
+                        .append(";\n");
+            }
+            throw new PersonCreateRequestException(stringBuilder.toString());
+        }
     }
 }
