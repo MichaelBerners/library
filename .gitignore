@@ -8,3 +8,7 @@ docker-compose.yml
 mvnw.cmd
 sql script.txt
 swagger
+other
+AuthProviderImpl.java
+SecConf.java
+library.log

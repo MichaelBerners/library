@@ -32,8 +32,10 @@ public class Person {
     private String email;
     @Column(name = "create_at")
     private Timestamp createAt;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private PersonStatus status;
+    private String password;
+    //private PersonRole role;
     @OneToMany(mappedBy = "person")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

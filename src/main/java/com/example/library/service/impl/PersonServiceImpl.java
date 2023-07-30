@@ -14,6 +14,8 @@ import com.example.library.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -28,6 +30,7 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
     private final PersonResponseMapper personResponseMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public PersonResponse create(PersonRequest personRequest, BindingResult bindingResult) {
@@ -41,6 +44,7 @@ public class PersonServiceImpl implements PersonService {
         person.setEmail(personRequest.getEmail());
         person.setCreateAt(new Timestamp(System.currentTimeMillis()));
         person.setStatus(PersonStatus.NEW);
+        person.setPassword(passwordEncoder.encode(personRequest.getPassword()));
         final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
                 .withIgnorePaths("id", "createAt");
         final Example<Person> example = Example.of(person, exampleMatcher);

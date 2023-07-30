@@ -12,7 +12,8 @@ create table persons
     phone_number    varchar(12)  not null,
     email           varchar(150) not null,
     create_at       timestamp    not null,
-    status          int          not null,
+    status          varchar      not null,
+    password        varchar(150) not null,
     unique (passport_number),
     unique (phone_number),
     unique (email)
@@ -29,8 +30,8 @@ create table books
     title     varchar(150) not null,
     author    varchar(150) not null,
     year      varchar(4)   not null,
-    condition int          not null,
-    status    int          not null,
+    condition varchar      not null,
+    status    varchar      not null,
     person_id bigint,
     constraint books_fk foreign key (person_id) references persons (id)
 

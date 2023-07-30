@@ -20,9 +20,9 @@ public class Book {
     private String title;
     private String author;
     private String year;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private BookCondition condition;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private BookStatus status;
     @ManyToOne
     @JoinColumn(name = "person_id")

@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.domain.entity.Person;
 import com.example.library.domain.request.PersonRequest;
 import com.example.library.domain.response.PersonResponse;
 import org.springframework.validation.BindingResult;
@@ -14,5 +15,6 @@ public interface PersonService {
     List<PersonResponse> readAll();
     PersonResponse update(PersonRequest personRequest);
     void delete(PersonRequest personRequest);
+
 
 }
