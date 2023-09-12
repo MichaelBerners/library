@@ -1,4 +1,4 @@
-package security;
+package com.example.library.security;
 
 import com.example.library.domain.entity.Person;
 import com.example.library.domain.entity.PersonRole;

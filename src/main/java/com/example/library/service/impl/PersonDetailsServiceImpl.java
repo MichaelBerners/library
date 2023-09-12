@@ -8,11 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import security.PersonDetails;
+import com.example.library.security.PersonDetails;
 
 @Slf4j
-@Service
+//@Service
 @AllArgsConstructor
 public class PersonDetailsServiceImpl implements UserDetailsService {
     PersonRepository personRepository;

@@ -35,7 +35,8 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private PersonStatus status;
     private String password;
-    //private PersonRole role;
+    @Enumerated(EnumType.STRING)
+    private PersonRole role;
     @OneToMany(mappedBy = "person")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

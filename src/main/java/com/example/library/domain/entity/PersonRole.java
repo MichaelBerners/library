@@ -1,5 +1,12 @@
 package com.example.library.domain.entity;
 
-public enum PersonRole {
-    ADMIN, USER
+import org.springframework.security.core.GrantedAuthority;
+
+public enum PersonRole implements GrantedAuthority {
+    ADMIN, USER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

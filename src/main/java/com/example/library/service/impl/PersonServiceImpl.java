@@ -1,6 +1,7 @@
 package com.example.library.service.impl;
 
 import com.example.library.domain.entity.Person;
+import com.example.library.domain.entity.PersonRole;
 import com.example.library.domain.entity.PersonStatus;
 import com.example.library.domain.exception.CreateNewPersonException;
 import com.example.library.domain.exception.PersonCreateRequestException;
@@ -45,6 +46,7 @@ public class PersonServiceImpl implements PersonService {
         person.setCreateAt(new Timestamp(System.currentTimeMillis()));
         person.setStatus(PersonStatus.NEW);
         person.setPassword(passwordEncoder.encode(personRequest.getPassword()));
+        person.setRole(PersonRole.USER);
         final ExampleMatcher exampleMatcher = ExampleMatcher.matching()
                 .withIgnorePaths("id", "createAt");
         final Example<Person> example = Example.of(person, exampleMatcher);

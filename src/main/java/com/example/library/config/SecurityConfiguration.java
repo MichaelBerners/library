@@ -40,7 +40,7 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
 
         http
-                .httpBasic(Customizer.withDefaults())
+                //.httpBasic(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/login")
@@ -49,7 +49,8 @@ public class SecurityConfiguration {
                         .failureUrl("/auth/login?error")
                 )
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/persons/delete").hasRole("ADMIN")
+                        .requestMatchers("/persons/delete").hasAuthority("ADMIN")
+                        .requestMatchers("/test").hasAuthority("USER")
                         .requestMatchers("/persons/**").authenticated()
                         .requestMatchers("/books/**").anonymous()
                         .anyRequest().permitAll()
